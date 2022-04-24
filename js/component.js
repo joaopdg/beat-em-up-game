@@ -5,8 +5,8 @@ class Background {
   }
 
   drawBackground() {
-    this.img.src = "/docs/assets/imgs/background.jpg";
-    ctx.drawImage(this.img, 0, 0, 900, 365);
+    ctx.fillStyle = "lightcyan";
+    ctx.fillRect(0, 0, 900, 500);
     ctx.fillStyle = "lightgrey";
     ctx.fillRect(0, 360, 900, 390);
     ctx.fillStyle = "grey";
@@ -41,7 +41,7 @@ class Player {
     return this.y;
   }
   bottom() {
-    return this.y + this.height;
+    return this.y + this.height / 2;
   }
   crashWith(enemies) {
     return !(

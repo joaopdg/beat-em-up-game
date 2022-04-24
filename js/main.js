@@ -60,7 +60,7 @@ function checkGameOver() {
         enemiesBack[i].x += 60;
       }
       player.life -= 50;
-    } else if (player.life < 0) {
+    } else if (player.life <= 0) {
       gameEngine.stop();
     } else if (player.crashWith(enemiesBack[i]) && player.width === 65) {
       enemiesBack.splice(enemiesFront[i], 1);
@@ -76,7 +76,7 @@ function checkGameOver() {
         enemiesFront[i].x += 60;
       }
       player.life -= 50;
-    } else if (player.life < 0) {
+    } else if (player.life <= 0) {
       gameEngine.stop();
     } else if (player.crashWith(enemiesFront[i]) && player.width === 65) {
       enemiesFront.splice(enemiesFront[i], 1);
