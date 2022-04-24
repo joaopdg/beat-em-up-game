@@ -59,7 +59,7 @@ function checkGameOver() {
       } else {
         enemiesBack[i].x += 60;
       }
-      playerImage.src = playerDown.src;
+      player.life -= 50;
     } else if (player.life < 0) {
       gameEngine.stop();
     } else if (player.crashWith(enemiesBack[i]) && player.width === 65) {
