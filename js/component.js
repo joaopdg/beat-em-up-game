@@ -1,11 +1,12 @@
 class Background {
   constructor() {
-    this.roadHeight = 340;
+    this.roadHeight = 300;
+    this.img = new Image();
   }
 
   drawBackground() {
-    ctx.fillStyle = "lightcyan";
-    ctx.fillRect(0, 0, 900, 500);
+    this.img.src = "/docs/assets/imgs/background.jpg";
+    ctx.drawImage(this.img, 0, 0, 900, 365);
     ctx.fillStyle = "lightgrey";
     ctx.fillRect(0, 360, 900, 390);
     ctx.fillStyle = "grey";

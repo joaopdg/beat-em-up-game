@@ -31,6 +31,7 @@ const gameEngine = {
     ctx.fillText(`Score: ${points}`, 30, 490);
   },
   lifeBar: function () {
+    ctx.fillStyle = "black";
     ctx.fillText("Life", 30, 35);
     ctx.fillStyle = "green";
     ctx.fillRect(31, 41, player.life, 18);
@@ -42,24 +43,24 @@ const gameEngine = {
 const updateGameArea = () => {
   background.drawBackground();
   updateEnemiesBack();
+  checkGameOver();
+  gameEngine.win();
   player.drawPlayer();
   updateEnemiesFront();
-  checkGameOver();
-  gameEngine.score();
   gameEngine.lifeBar();
-  gameEngine.win();
+  gameEngine.score();
 };
 
 function checkGameOver() {
   for (let i = 0; i < enemiesBack.length; i++) {
     if (player.crashWith(enemiesBack[i]) && player.width === 40) {
-      if (player.x > 0) {
+      if (player.x > 100) {
         player.x -= 60;
       } else {
         enemiesBack[i].x += 60;
       }
-      player.life -= 50;
-    } else if (player.life <= 0) {
+      playerImage.src = playerDown.src;
+    } else if (player.life < 0) {
       gameEngine.stop();
     } else if (player.crashWith(enemiesBack[i]) && player.width === 65) {
       enemiesBack.splice(enemiesFront[i], 1);
@@ -69,13 +70,13 @@ function checkGameOver() {
 
   for (let i = 0; i < enemiesFront.length; i++) {
     if (player.crashWith(enemiesFront[i]) && player.width === 40) {
-      if (player.x > 0) {
+      if (player.x > 100) {
         player.x -= 60;
       } else {
         enemiesFront[i].x += 60;
       }
       player.life -= 50;
-    } else if (player.life <= 0) {
+    } else if (player.life < 0) {
       gameEngine.stop();
     } else if (player.crashWith(enemiesFront[i]) && player.width === 65) {
       enemiesFront.splice(enemiesFront[i], 1);

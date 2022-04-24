@@ -14,7 +14,7 @@ document.addEventListener("keydown", (e) => {
       break;
     case "ArrowUp":
       playerWalking();
-      if (player.y > 340) {
+      if (player.y > background.roadHeight) {
         player.y -= 2.5;
       }
       break;
