@@ -8,6 +8,9 @@ const player = new Player();
 const background = new Background();
 let points = 0;
 
+//DELETE LATER
+const measures = new Measures()
+
 const gameEngine = {
   frames: 0,
   start: function () {
@@ -52,6 +55,8 @@ const updateGameArea = () => {
   updateEnemiesFront();
   gameEngine.lifeBar();
   gameEngine.score();
+  //DELETE LATER
+  measures.drawMeasures()
 };
 
 function checkGameOver() {

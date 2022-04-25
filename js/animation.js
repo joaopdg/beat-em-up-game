@@ -1,14 +1,14 @@
 // PLAYER ANIMATION
 let playerStopped = new Image();
-playerStopped.src = "/docs/assets/imgs/player_stopped.png";
+playerStopped.src = "docs/assets/imgs/player_stopped.png";
 let playerWalking1 = new Image();
-playerWalking1.src = "/docs/assets/imgs/player_walking1.png";
+playerWalking1.src = "docs/assets/imgs/player_walking1.png";
 let playerWalking2 = new Image();
-playerWalking2.src = "/docs/assets/imgs/player_walking2.png";
+playerWalking2.src = "docs/assets/imgs/player_walking2.png";
 let playerPunch = new Image();
-playerPunch.src = "/docs/assets/imgs/player_punch.png";
+playerPunch.src = "docs/assets/imgs/player_punch.png";
 let playerDown = new Image();
-playerDown.srrc = "/docs/assets/imgs/player_down.png";
+playerDown.srrc = "docs/assets/imgs/player_down.png";
 let playerImage = new Image();
 playerImage.src = playerStopped.src;
 
@@ -32,11 +32,11 @@ function playerWalking() {
 
 // ENEMY ANIMATION
 let enemyStopped = new Image();
-enemyStopped.src = "/docs/assets/imgs/player_stopped.png";
+enemyStopped.src = "docs/assets/imgs/player_stopped.png";
 let enemyWalking1 = new Image();
-enemyWalking1.src = "/docs/assets/imgs/enemy_walking1.png";
+enemyWalking1.src = "docs/assets/imgs/enemy_walking1.png";
 let enemyWalking2 = new Image();
-enemyWalking2.src = "/docs/assets/imgs/enemy_walking2.png";
+enemyWalking2.src = "docs/assets/imgs/enemy_walking2.png";
 let enemyImage = new Image();
 enemyImage.src = enemyStopped.src;
 

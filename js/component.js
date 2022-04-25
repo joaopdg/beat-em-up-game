@@ -1,6 +1,26 @@
+//DELETE LATER
+class Measures {
+  drawMeasures (){
+    ctx.fillStyle = "green";
+    ctx.fillRect(0, 166, 900, 2);
+    ctx.fillRect(0, 332, 900, 2);
+    ctx.fillStyle = "red";
+    ctx.fillRect(0, 250, 900, 2);
+    ctx.fillRect(450, 0, 2, 500);
+    ctx.fillStyle = "green";
+    ctx.fillRect(300, 0, 2, 500);
+    ctx.fillRect(600, 0, 2, 500);
+    ctx.fillStyle = "blue";
+    ctx.fillRect(10, 0, 2, 500);
+    ctx.fillRect(890, 0, 2, 500);
+    ctx.fillRect(0, 10, 900, 2);
+    ctx.fillRect(0, 490, 900, 2);
+  }
+}
+
 class Background {
   constructor() {
-    this.roadHeight = 300;
+    this.roadHeight = 168;
     this.img = new Image();
   }
 
@@ -8,22 +28,22 @@ class Background {
     ctx.fillStyle = "lightcyan";
     ctx.fillRect(0, 0, 900, 500);
     ctx.fillStyle = "lightgrey";
-    ctx.fillRect(0, 360, 900, 390);
+    ctx.fillRect(0, 268, 900, 298);
     ctx.fillStyle = "grey";
-    ctx.fillRect(0, 390, 900, 400);
+    ctx.fillRect(0, 298, 900, 300);
     ctx.fillStyle = "darkgrey";
-    ctx.fillRect(0, 400, 900, 500);
+    ctx.fillRect(0, 310, 900, 500);
   }
 }
 
 class Player {
   constructor() {
     this.x = 20;
-    this.y = 370;
-    this.widthStopped = 40;
-    this.withPunching = 65;
+    this.y = 250;
+    this.widthStopped = 83;
+    this.withPunching = 108;
     this.width = this.widthStopped;
-    this.height = 80;
+    this.height = 166;
     this.img = playerImage;
     this.life = 300;
   }
@@ -93,7 +113,7 @@ function updateEnemiesBack() {
     enemiesBack[i].drawEnemy();
   }
 
-  if (gameEngine.frames % 250 === 0 && gameEngine.frames < 4900) {
+  if (gameEngine.frames % 500 === 0 && gameEngine.frames < 4900) {
     let minY = background.roadHeight;
     let maxY =
       background.roadHeight +
@@ -112,7 +132,7 @@ function updateEnemiesFront() {
     enemiesFront[i].drawEnemy();
   }
 
-  if (gameEngine.frames % 500 === 1 && gameEngine.frames < 4900) {
+  if (gameEngine.frames % 750 === 1 && gameEngine.frames < 4900) {
     let minY =
       background.roadHeight +
       (cHeight - background.roadHeight) / 2 -
@@ -120,7 +140,7 @@ function updateEnemiesFront() {
     let maxY = cHeight - player.height;
     let y = Math.floor(Math.random() * (maxY - minY) + minY);
 
-    enemiesFront.push(new Enemy(Math.floor(Math.random() * 100), y));
+    enemiesFront.push(new Enemy(Math.floor(Math.random() * 200), y));
   }
 }
 
