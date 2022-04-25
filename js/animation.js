@@ -1,6 +1,8 @@
 // PLAYER ANIMATION
 let playerStopped = new Image();
 playerStopped.src = "docs/assets/imgs/player_stopped.png";
+let playerImage = new Image();
+playerImage.src = playerStopped.src;
 let playerWalking1 = new Image();
 playerWalking1.src = "docs/assets/imgs/player_walking1.png";
 let playerWalking2 = new Image();
@@ -9,8 +11,6 @@ let playerPunch = new Image();
 playerPunch.src = "docs/assets/imgs/player_punch.png";
 let playerDown = new Image();
 playerDown.srrc = "docs/assets/imgs/player_down.png";
-let playerImage = new Image();
-playerImage.src = playerStopped.src;
 
 function playerWalking() {
   if (gameEngine.frames % 10 === 0) {
@@ -33,17 +33,27 @@ function playerWalking() {
 // ENEMY ANIMATION
 let enemyStopped = new Image();
 enemyStopped.src = "docs/assets/imgs/player_stopped.png";
+let enemyImage = new Image();
+enemyImage.src = enemyStopped.src;
 let enemyWalking1 = new Image();
 enemyWalking1.src = "docs/assets/imgs/enemy_walking1.png";
 let enemyWalking2 = new Image();
 enemyWalking2.src = "docs/assets/imgs/enemy_walking2.png";
-let enemyImage = new Image();
-enemyImage.src = enemyStopped.src;
+let enemyDown = new Image();
+enemyDown.src = "docs/assets/imgs/enemy_down.png";
 
 function enemyWalking() {
   if (gameEngine.frames % 20 === 0) {
     enemyImage.src = enemyWalking1.src;
   } else if (gameEngine.frames % 25 === 0) {
     enemyImage.src = enemyWalking2.src;
+  }
+}
+
+function enemyKilled() {
+  if (gameEngine.frames % 20 === 0) {
+    enemyImage.src = enemyDown.src;
+  } else if (gameEngine.frames % 25 === 0) {
+    enemyImage.src = enemyDown.src;
   }
 }

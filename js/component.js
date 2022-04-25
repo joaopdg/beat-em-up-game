@@ -1,6 +1,6 @@
 //DELETE LATER
 class Measures {
-  drawMeasures (){
+  drawMeasures() {
     ctx.fillStyle = "green";
     ctx.fillRect(0, 166, 900, 2);
     ctx.fillRect(0, 332, 900, 2);
@@ -18,6 +18,8 @@ class Measures {
   }
 }
 
+let scrollVal = 0;
+
 class Background {
   constructor() {
     this.roadHeight = 168;
@@ -25,14 +27,22 @@ class Background {
   }
 
   drawBackground() {
-    ctx.fillStyle = "lightcyan";
+    this.img.src = "docs/assets/imgs/bakcground.jpg";
+    if (scrollVal >= cWidth) {
+      scrollVal = 0;
+    }
+    ctx.drawImage(this.img, -scrollVal, 0, 1797, 500);
+    ctx.drawImage(this.img, cWidth - scrollVal, 0, 1797, 500);
+    /*     ctx.drawImage(this.img, scrollVal, 0, 1797, cHeight); */
+
+    /*     ctx.fillStyle = "lightcyan";
     ctx.fillRect(0, 0, 900, 500);
     ctx.fillStyle = "lightgrey";
     ctx.fillRect(0, 268, 900, 298);
     ctx.fillStyle = "grey";
     ctx.fillRect(0, 298, 900, 300);
     ctx.fillStyle = "darkgrey";
-    ctx.fillRect(0, 310, 900, 500);
+    ctx.fillRect(0, 310, 900, 500); */
   }
 }
 
@@ -60,10 +70,10 @@ class Player {
   }
 
   top() {
-    return this.y + 73
+    return this.y + 73;
   }
   bottom() {
-    return (this.y + this.height) - 83;
+    return this.y + this.height - 83;
   }
   crashWith(enemies) {
     return !(
@@ -82,7 +92,7 @@ class Enemy {
     this.width = player.widthStopped;
     this.height = player.height;
     this.img = enemyImage;
-    this.life = 100
+    this.life = 100;
   }
   drawEnemy() {
     enemyWalking();
@@ -98,10 +108,10 @@ class Enemy {
   }
 
   top() {
-    return this.y;
+    return this.y + 63;
   }
   bottom() {
-    return this.y + this.height;
+    return this.y + this.height - 73;
   }
 }
 
@@ -119,7 +129,8 @@ function updateEnemiesBack() {
     let maxY =
       background.roadHeight +
       (cHeight - background.roadHeight) / 2 -
-      player.height / 2;
+      player.height / 2 -
+      10;
     let y = Math.floor(Math.random() * (maxY - minY) + minY);
 
     enemiesBack.push(new Enemy(0, y));
@@ -137,7 +148,8 @@ function updateEnemiesFront() {
     let minY =
       background.roadHeight +
       (cHeight - background.roadHeight) / 2 -
-      player.height / 2;
+      player.height / 2 +
+      10;
     let maxY = cHeight - player.height;
     let y = Math.floor(Math.random() * (maxY - minY) + minY);
 
@@ -178,14 +190,16 @@ const bossArray = [];
 function updateBoss() {
   for (let i = 0; i < bossArray.length; i++) {
     bossArray[i].drawBoss();
-    if (bossArray[i].x > 700) {
+    if (bossArray[i].x > 600) {
       bossArray[i].x -= 1;
     }
   }
 
   if (
-    gameEngine.frames ===
-    500/* 0 && gameEngine.frames < 5500 && enemiesFront.length === 0 && enemiesBack.length === 0 && bossArray.length === 0  */
+    gameEngine.frames > 5000 &&
+    enemiesFront.length === 0 &&
+    enemiesBack.length === 0 &&
+    bossArray.length === 0
   ) {
     bossArray.push(new Boss());
   }

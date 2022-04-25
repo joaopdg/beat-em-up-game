@@ -48,15 +48,15 @@ const gameEngine = {
 const updateGameArea = () => {
   background.drawBackground();
   updateBoss();
-  checkGameOver();
-  gameEngine.win();
   updateEnemiesBack();
   player.drawPlayer();
   updateEnemiesFront();
+  checkGameOver();
+  gameEngine.win();
   gameEngine.lifeBar();
   gameEngine.score();
   //DELETE LATER
-  measures.drawMeasures();
+  //measures.drawMeasures();
 };
 
 function checkGameOver() {
@@ -78,11 +78,17 @@ function checkGameOver() {
       player.width === player.withPunching
     ) {
       enemiesBack[i].life -= 50;
-      enemiesBack[i].x += 60
+      enemiesBack[i].x += 60;
       if (enemiesBack[i].life <= 0) {
-        enemiesBack.splice(enemiesBack[i], 1);
-        points += 1;
+        setTimeout(function () {
+          enemiesBack.splice(enemiesBack[i], 1);
+          points += 1;
+        }, 500);
       }
+    }
+    if (enemiesBack[i].x + enemiesBack[i].width <= 0) {
+      player.life -= 20;
+      enemiesBack.splice(enemiesBack[i], 1);
     }
     if (player.life <= 0) {
       gameEngine.stop();
@@ -107,11 +113,17 @@ function checkGameOver() {
       player.width === player.withPunching
     ) {
       enemiesFront[i].life -= 50;
-      enemiesFront[i].x += 60
+      enemiesFront[i].x += 60;
       if (enemiesFront[i].life <= 0) {
-        enemiesFront.splice(enemiesFront[i], 1);
-        points += 1;
+        setTimeout(function () {
+          enemiesFront.splice(enemiesFront[i], 1);
+          points += 1;
+        }, 500);
       }
+    }
+    if (enemiesFront[i].x + enemiesFront[i].width <= 0) {
+      player.life -= 20;
+      enemiesFront.splice(enemiesFront[i], 1);
     }
     if (player.life <= 0) {
       gameEngine.stop();
