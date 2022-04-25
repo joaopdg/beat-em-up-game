@@ -60,10 +60,10 @@ class Player {
   }
 
   top() {
-    return this.y;
+    return this.y + 73
   }
   bottom() {
-    return this.y + this.height / 2;
+    return (this.y + this.height) - 83;
   }
   crashWith(enemies) {
     return !(
@@ -82,6 +82,7 @@ class Enemy {
     this.width = player.widthStopped;
     this.height = player.height;
     this.img = enemyImage;
+    this.life = 100
   }
   drawEnemy() {
     enemyWalking();
@@ -147,9 +148,9 @@ function updateEnemiesFront() {
 class Boss {
   constructor() {
     this.x = 900;
-    this.y = 300;
-    this.width = 156;
-    this.height = 156;
+    this.y = 150;
+    this.width = 256;
+    this.height = 256;
     this.life = 500;
     this.img = new Image();
   }
@@ -184,7 +185,7 @@ function updateBoss() {
 
   if (
     gameEngine.frames ===
-    5000 && gameEngine.frames < 5500 && enemiesFront.length === 0 && enemiesBack.length === 0 && bossArray.length === 0 
+    500/* 0 && gameEngine.frames < 5500 && enemiesFront.length === 0 && enemiesBack.length === 0 && bossArray.length === 0  */
   ) {
     bossArray.push(new Boss());
   }

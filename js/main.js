@@ -9,7 +9,7 @@ const background = new Background();
 let points = 0;
 
 //DELETE LATER
-const measures = new Measures()
+const measures = new Measures();
 
 const gameEngine = {
   frames: 0,
@@ -56,10 +56,11 @@ const updateGameArea = () => {
   gameEngine.lifeBar();
   gameEngine.score();
   //DELETE LATER
-  measures.drawMeasures()
+  measures.drawMeasures();
 };
 
 function checkGameOver() {
+  // COLISION WITH BACK ROW ENEMIES
   for (let i = 0; i < enemiesBack.length; i++) {
     if (
       player.crashWith(enemiesBack[i]) &&
@@ -71,17 +72,24 @@ function checkGameOver() {
         enemiesBack[i].x += 60;
       }
       player.life -= 50;
-    } else if (player.life <= 0) {
-      gameEngine.stop();
-    } else if (
+    }
+    if (
       player.crashWith(enemiesBack[i]) &&
       player.width === player.withPunching
     ) {
-      enemiesBack.splice(enemiesFront[i], 1);
-      points += 1;
+      enemiesBack[i].life -= 50;
+      enemiesBack[i].x += 60
+      if (enemiesBack[i].life <= 0) {
+        enemiesBack.splice(enemiesBack[i], 1);
+        points += 1;
+      }
+    }
+    if (player.life <= 0) {
+      gameEngine.stop();
     }
   }
 
+  // COLISION WITH FRONT ROW ENEMIES
   for (let i = 0; i < enemiesFront.length; i++) {
     if (
       player.crashWith(enemiesFront[i]) &&
@@ -93,17 +101,24 @@ function checkGameOver() {
         enemiesFront[i].x += 60;
       }
       player.life -= 50;
-    } else if (player.life <= 0) {
-      gameEngine.stop();
-    } else if (
+    }
+    if (
       player.crashWith(enemiesFront[i]) &&
       player.width === player.withPunching
     ) {
-      enemiesFront.splice(enemiesFront[i], 1);
-      points += 1;
+      enemiesFront[i].life -= 50;
+      enemiesFront[i].x += 60
+      if (enemiesFront[i].life <= 0) {
+        enemiesFront.splice(enemiesFront[i], 1);
+        points += 1;
+      }
+    }
+    if (player.life <= 0) {
+      gameEngine.stop();
     }
   }
 
+  // COLISION WITH BOSS
   for (let i = 0; i < bossArray.length; i++) {
     if (
       player.crashWith(bossArray[i]) &&
@@ -123,4 +138,5 @@ function checkGameOver() {
   }
 }
 
+// START GAME
 gameEngine.start();
