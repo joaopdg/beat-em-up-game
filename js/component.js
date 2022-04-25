@@ -19,10 +19,9 @@ class Measures {
 }
 
 let scrollVal = 0;
-
 class Background {
   constructor() {
-    this.roadHeight = 168;
+    this.roadHeight = 200;
     this.img = new Image();
   }
 
@@ -108,7 +107,7 @@ class Enemy {
   }
 
   top() {
-    return this.y + 63;
+    return this.y + 53;
   }
   bottom() {
     return this.y + this.height - 73;
@@ -124,13 +123,13 @@ function updateEnemiesBack() {
     enemiesBack[i].drawEnemy();
   }
 
-  if (gameEngine.frames % 500 === 0 && gameEngine.frames < 4900) {
+  if (gameEngine.frames % 750 === 0 && gameEngine.frames < 4900) {
     let minY = background.roadHeight;
     let maxY =
       background.roadHeight +
       (cHeight - background.roadHeight) / 2 -
       player.height / 2 -
-      10;
+      35;
     let y = Math.floor(Math.random() * (maxY - minY) + minY);
 
     enemiesBack.push(new Enemy(0, y));
@@ -144,16 +143,16 @@ function updateEnemiesFront() {
     enemiesFront[i].drawEnemy();
   }
 
-  if (gameEngine.frames % 750 === 1 && gameEngine.frames < 4900) {
+  if (gameEngine.frames % 1000 === 1 && gameEngine.frames < 4900) {
     let minY =
       background.roadHeight +
       (cHeight - background.roadHeight) / 2 -
       player.height / 2 +
-      10;
-    let maxY = cHeight - player.height;
+      20;
+    let maxY = cHeight - player.height - 25;
     let y = Math.floor(Math.random() * (maxY - minY) + minY);
 
-    enemiesFront.push(new Enemy(Math.floor(Math.random() * 200), y));
+    enemiesFront.push(new Enemy(Math.floor(Math.random() * 1000), y));
   }
 }
 

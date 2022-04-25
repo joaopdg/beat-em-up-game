@@ -7,7 +7,7 @@ document.addEventListener("keydown", (e) => {
       }
       break;
     case "ArrowRight":
-      scrollVal += 1.5;
+      if (player.x > 100) scrollVal += 1.5;
       playerWalking();
       if (player.x + player.width < cWidth) {
         player.x += 3;
@@ -21,7 +21,7 @@ document.addEventListener("keydown", (e) => {
       break;
     case "ArrowDown":
       playerWalking();
-      if (player.y + player.height < cHeight) {
+      if (player.y + player.height < cHeight - 25) {
         player.y += 2.5;
       }
       break;

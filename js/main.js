@@ -80,10 +80,8 @@ function checkGameOver() {
       enemiesBack[i].life -= 50;
       enemiesBack[i].x += 60;
       if (enemiesBack[i].life <= 0) {
-        setTimeout(function () {
-          enemiesBack.splice(enemiesBack[i], 1);
-          points += 1;
-        }, 500);
+        enemiesBack.splice(enemiesBack[i], 1);
+        points += 1;
       }
     }
     if (enemiesBack[i].x + enemiesBack[i].width <= 0) {
@@ -115,10 +113,8 @@ function checkGameOver() {
       enemiesFront[i].life -= 50;
       enemiesFront[i].x += 60;
       if (enemiesFront[i].life <= 0) {
-        setTimeout(function () {
-          enemiesFront.splice(enemiesFront[i], 1);
-          points += 1;
-        }, 500);
+        enemiesFront.splice(enemiesFront[i], 1);
+        points += 1;
       }
     }
     if (enemiesFront[i].x + enemiesFront[i].width <= 0) {
