@@ -14,7 +14,7 @@ const gameEngine = {
     this.interval = setInterval(updateGameArea, 20);
   },
   win: function () {
-    if (points === 20) {
+    if (points === 50) {
       clearInterval(this.interval);
       ctx.fillStyle = "green";
       ctx.fillText("YOU WIN", 420, 225);
@@ -29,6 +29,8 @@ const gameEngine = {
     ctx.font = "18px Helvetica";
     ctx.fillStyle = "black";
     ctx.fillText(`Score: ${points}`, 30, 490);
+    ctx.font = "12px Helvetica";
+    ctx.fillText(`frames: ${gameEngine.frames}`, 800, 35);
   },
   lifeBar: function () {
     ctx.fillStyle = "black";
@@ -42,9 +44,10 @@ const gameEngine = {
 
 const updateGameArea = () => {
   background.drawBackground();
-  updateEnemiesBack();
+  updateBoss();
   checkGameOver();
   gameEngine.win();
+  updateEnemiesBack();
   player.drawPlayer();
   updateEnemiesFront();
   gameEngine.lifeBar();
@@ -53,7 +56,10 @@ const updateGameArea = () => {
 
 function checkGameOver() {
   for (let i = 0; i < enemiesBack.length; i++) {
-    if (player.crashWith(enemiesBack[i]) && player.width === 40) {
+    if (
+      player.crashWith(enemiesBack[i]) &&
+      player.width === player.widthStopped
+    ) {
       if (player.x > 100) {
         player.x -= 60;
       } else {
@@ -62,14 +68,20 @@ function checkGameOver() {
       player.life -= 50;
     } else if (player.life <= 0) {
       gameEngine.stop();
-    } else if (player.crashWith(enemiesBack[i]) && player.width === 65) {
+    } else if (
+      player.crashWith(enemiesBack[i]) &&
+      player.width === player.withPunching
+    ) {
       enemiesBack.splice(enemiesFront[i], 1);
       points += 1;
     }
   }
 
   for (let i = 0; i < enemiesFront.length; i++) {
-    if (player.crashWith(enemiesFront[i]) && player.width === 40) {
+    if (
+      player.crashWith(enemiesFront[i]) &&
+      player.width === player.widthStopped
+    ) {
       if (player.x > 100) {
         player.x -= 60;
       } else {
@@ -78,9 +90,30 @@ function checkGameOver() {
       player.life -= 50;
     } else if (player.life <= 0) {
       gameEngine.stop();
-    } else if (player.crashWith(enemiesFront[i]) && player.width === 65) {
+    } else if (
+      player.crashWith(enemiesFront[i]) &&
+      player.width === player.withPunching
+    ) {
       enemiesFront.splice(enemiesFront[i], 1);
       points += 1;
+    }
+  }
+
+  for (let i = 0; i < bossArray.length; i++) {
+    if (
+      player.crashWith(bossArray[i]) &&
+      player.width === player.widthStopped
+    ) {
+      player.life -= 50;
+    } else if (player.life <= 0) {
+      gameEngine.stop();
+    } else if (
+      player.crashWith(bossArray[i]) &&
+      player.width === player.withPunching
+    ) {
+      bossArray[i].life -= 50;
+    } else if (bossArray[i].life <= 0) {
+      points += 100;
     }
   }
 }

@@ -25,12 +25,13 @@ document.addEventListener("keydown", (e) => {
       }
       break;
     case "Space":
-      player.width = 65;
+      player.width = player.withPunching;
       playerImage.src = playerPunch.src;
+      break;
   }
 });
 
 document.addEventListener("keyup", (e) => {
-  player.width = 40;
+  player.width = player.widthStopped;
   playerImage.src = playerStopped.src;
 });
