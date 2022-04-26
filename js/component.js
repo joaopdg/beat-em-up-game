@@ -192,8 +192,10 @@ class Fire {
     this.img = new Image();
   }
   drawFire() {
-    this.x -= Math.floor(Math.random() * (6 - 1) + 1);
-    this.y += Math.floor(Math.random() * (2 - 1) + 1);
+    if (this.x > randomX && this.y < randomY) {
+      this.x -= Math.floor(Math.random() * (6 - 2) + 2);
+      this.y += Math.floor(Math.random() * (2 - 1) + 1);
+    }
     this.img.src = "../docs/assets/imgs/fire1.png";
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
   }
@@ -213,13 +215,24 @@ class Fire {
   }
 }
 
+let randomX;
+let randomY;
 const fireArray = [];
 function updateFire() {
   for (let i = 0; i < fireArray.length; i++) {
     fireArray[i].drawFire();
+    randomX = Math.floor(Math.random() * (900 - 100) + 100);
+    randomY = Math.floor(Math.random() * (400 - 250) + 250);
+    setTimeout(() => {
+      fireArray.pop(fireArray[i]);
+    }, 17000);
   }
 
-  if (gameEngine.frames % 10 === 1) {
+  if (
+    gameEngine.frames % 40 === 1 &&
+    fireArray.length < 10 &&
+    bossArray.length === 1
+  ) {
     fireArray.push(new Fire());
   }
 }

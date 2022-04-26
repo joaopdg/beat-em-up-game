@@ -44,7 +44,7 @@ const gameEngine = {
 
 const updateGameArea = () => {
   background.drawBackground();
-  updateFire()
+  updateFire();
   updateBoss();
   updateEnemiesBack();
   player.drawPlayer();
