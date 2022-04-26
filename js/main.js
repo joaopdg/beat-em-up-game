@@ -8,9 +8,6 @@ const player = new Player();
 const background = new Background();
 let points = 0;
 
-//DELETE LATER
-const measures = new Measures();
-
 const gameEngine = {
   frames: 0,
   start: function () {
@@ -47,16 +44,16 @@ const gameEngine = {
 
 const updateGameArea = () => {
   background.drawBackground();
+  updateFire()
   updateBoss();
   updateEnemiesBack();
   player.drawPlayer();
   updateEnemiesFront();
+  background.drawFence();
   checkGameOver();
   gameEngine.win();
   gameEngine.lifeBar();
   gameEngine.score();
-  //DELETE LATER
-  //measures.drawMeasures();
 };
 
 function checkGameOver() {
@@ -75,18 +72,36 @@ function checkGameOver() {
     }
     if (
       player.crashWith(enemiesBack[i]) &&
+      player.width === player.widthBlocking
+    ) {
+      if (player.x > 100) {
+        player.x -= 60;
+      } else {
+        enemiesBack[i].x += 60;
+      }
+      player.life -= 10;
+    }
+    if (
+      player.crashWith(enemiesBack[i]) &&
       player.width === player.withPunching
     ) {
       enemiesBack[i].life -= 50;
       enemiesBack[i].x += 60;
-      if (enemiesBack[i].life <= 0) {
-        enemiesBack.splice(enemiesBack[i], 1);
-        points += 1;
-      }
+    }
+    if (
+      player.crashWith(enemiesBack[i]) &&
+      player.width === player.widthKicking
+    ) {
+      enemiesBack[i].life -= 100;
+      enemiesBack[i].x += 90;
     }
     if (enemiesBack[i].x + enemiesBack[i].width <= 0) {
       player.life -= 20;
       enemiesBack.splice(enemiesBack[i], 1);
+    }
+    if (enemiesBack[i].life <= 0) {
+      enemiesBack.splice(enemiesBack[i], 1);
+      points += 1;
     }
     if (player.life <= 0) {
       gameEngine.stop();
@@ -108,18 +123,36 @@ function checkGameOver() {
     }
     if (
       player.crashWith(enemiesFront[i]) &&
+      player.width === player.widthBlocking
+    ) {
+      if (player.x > 100) {
+        player.x -= 60;
+      } else {
+        enemiesFront[i].x += 60;
+      }
+      player.life -= 10;
+    }
+    if (
+      player.crashWith(enemiesFront[i]) &&
       player.width === player.withPunching
     ) {
       enemiesFront[i].life -= 50;
       enemiesFront[i].x += 60;
-      if (enemiesFront[i].life <= 0) {
-        enemiesFront.splice(enemiesFront[i], 1);
-        points += 1;
-      }
+    }
+    if (
+      player.crashWith(enemiesFront[i]) &&
+      player.width === player.widthKicking
+    ) {
+      enemiesFront[i].life -= 100;
+      enemiesFront[i].x += 90;
     }
     if (enemiesFront[i].x + enemiesFront[i].width <= 0) {
       player.life -= 20;
       enemiesFront.splice(enemiesFront[i], 1);
+    }
+    if (enemiesFront[i].life <= 0) {
+      enemiesFront.splice(enemiesFront[i], 1);
+      points += 1;
     }
     if (player.life <= 0) {
       gameEngine.stop();

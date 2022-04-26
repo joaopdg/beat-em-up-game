@@ -1,47 +1,24 @@
-//DELETE LATER
-class Measures {
-  drawMeasures() {
-    ctx.fillStyle = "green";
-    ctx.fillRect(0, 166, 900, 2);
-    ctx.fillRect(0, 332, 900, 2);
-    ctx.fillStyle = "red";
-    ctx.fillRect(0, 250, 900, 2);
-    ctx.fillRect(450, 0, 2, 500);
-    ctx.fillStyle = "green";
-    ctx.fillRect(300, 0, 2, 500);
-    ctx.fillRect(600, 0, 2, 500);
-    ctx.fillStyle = "blue";
-    ctx.fillRect(10, 0, 2, 500);
-    ctx.fillRect(890, 0, 2, 500);
-    ctx.fillRect(0, 10, 900, 2);
-    ctx.fillRect(0, 490, 900, 2);
-  }
-}
-
 let scrollVal = 0;
 class Background {
   constructor() {
     this.roadHeight = 200;
-    this.img = new Image();
+    this.imgBg = new Image();
+    this.imgFence = new Image();
   }
 
   drawBackground() {
-    this.img.src = "docs/assets/imgs/bakcground.jpg";
+    this.imgBg.src = "docs/assets/imgs/background.jpg";
     if (scrollVal >= cWidth) {
       scrollVal = 0;
     }
-    ctx.drawImage(this.img, -scrollVal, 0, 1797, 500);
-    ctx.drawImage(this.img, cWidth - scrollVal, 0, 1797, 500);
-    /*     ctx.drawImage(this.img, scrollVal, 0, 1797, cHeight); */
+    ctx.drawImage(this.imgBg, -scrollVal, 0, 900, 500);
+    ctx.drawImage(this.imgBg, cWidth - scrollVal, 0, 900, 500);
+  }
 
-    /*     ctx.fillStyle = "lightcyan";
-    ctx.fillRect(0, 0, 900, 500);
-    ctx.fillStyle = "lightgrey";
-    ctx.fillRect(0, 268, 900, 298);
-    ctx.fillStyle = "grey";
-    ctx.fillRect(0, 298, 900, 300);
-    ctx.fillStyle = "darkgrey";
-    ctx.fillRect(0, 310, 900, 500); */
+  drawFence() {
+    this.imgFence.src = "docs/assets/imgs/background_fence.png";
+    ctx.drawImage(this.imgFence, -scrollVal, 0, 900, 500);
+    ctx.drawImage(this.imgFence, cWidth - scrollVal, 0, 900, 500);
   }
 }
 
@@ -49,8 +26,10 @@ class Player {
   constructor() {
     this.x = 20;
     this.y = 250;
-    this.widthStopped = 83;
-    this.withPunching = 108;
+    this.widthStopped = 92;
+    this.withPunching = 136;
+    this.widthKicking = 155;
+    this.widthBlocking = 102;
     this.width = this.widthStopped;
     this.height = 166;
     this.img = playerImage;
@@ -88,10 +67,10 @@ class Enemy {
   constructor(x, y) {
     this.x = 900 + x;
     this.y = y;
-    this.width = player.widthStopped;
-    this.height = player.height;
+    this.width = 104;
+    this.height = 140;
     this.img = enemyImage;
-    this.life = 100;
+    this.life = 150;
   }
   drawEnemy() {
     enemyWalking();
@@ -107,10 +86,10 @@ class Enemy {
   }
 
   top() {
-    return this.y + 53;
+    return this.y + 52;
   }
   bottom() {
-    return this.y + this.height - 73;
+    return this.y + this.height - 52;
   }
 }
 
@@ -124,12 +103,12 @@ function updateEnemiesBack() {
   }
 
   if (gameEngine.frames % 750 === 0 && gameEngine.frames < 4900) {
-    let minY = background.roadHeight;
+    let minY = background.roadHeight + 20;
     let maxY =
       background.roadHeight +
       (cHeight - background.roadHeight) / 2 -
       player.height / 2 -
-      35;
+      15;
     let y = Math.floor(Math.random() * (maxY - minY) + minY);
 
     enemiesBack.push(new Enemy(0, y));
@@ -149,10 +128,10 @@ function updateEnemiesFront() {
       (cHeight - background.roadHeight) / 2 -
       player.height / 2 +
       20;
-    let maxY = cHeight - player.height - 25;
+    let maxY = cHeight - player.height - 15;
     let y = Math.floor(Math.random() * (maxY - minY) + minY);
 
-    enemiesFront.push(new Enemy(Math.floor(Math.random() * 1000), y));
+    enemiesFront.push(new Enemy(Math.floor(Math.random()) * 100, y));
   }
 }
 
@@ -201,5 +180,46 @@ function updateBoss() {
     bossArray.length === 0
   ) {
     bossArray.push(new Boss());
+  }
+}
+
+class Fire {
+  constructor() {
+    this.x = 700;
+    this.y = 200;
+    this.width = 100;
+    this.height = 100;
+    this.img = new Image();
+  }
+  drawFire() {
+    this.x -= Math.floor(Math.random() * (6 - 1) + 1);
+    this.y += Math.floor(Math.random() * (2 - 1) + 1);
+    this.img.src = "../docs/assets/imgs/fire1.png";
+    ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+  }
+  left() {
+    return this.x;
+  }
+
+  right() {
+    return this.x + this.width;
+  }
+
+  top() {
+    return this.y;
+  }
+  bottom() {
+    return this.y + this.height;
+  }
+}
+
+const fireArray = [];
+function updateFire() {
+  for (let i = 0; i < fireArray.length; i++) {
+    fireArray[i].drawFire();
+  }
+
+  if (gameEngine.frames % 10 === 1) {
+    fireArray.push(new Fire());
   }
 }

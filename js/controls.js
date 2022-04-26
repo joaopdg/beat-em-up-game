@@ -7,7 +7,8 @@ document.addEventListener("keydown", (e) => {
       }
       break;
     case "ArrowRight":
-      if (player.x > 100) scrollVal += 1.5;
+      //SCROLLING ANIMATION
+      if (player.x > 100 && bossArray.length === 0) scrollVal += 1.5;
       playerWalking();
       if (player.x + player.width < cWidth) {
         player.x += 3;
@@ -25,9 +26,17 @@ document.addEventListener("keydown", (e) => {
         player.y += 2.5;
       }
       break;
-    case "Space":
+    case "KeyA":
       player.width = player.withPunching;
       playerImage.src = playerPunch.src;
+      break;
+    case "KeyS":
+      player.width = player.widthKicking;
+      playerImage.src = playerKick.src;
+      break;
+    case "KeyD":
+      player.width = player.widthBlocking;
+      playerImage.src = playerBlock.src;
       break;
   }
 });
