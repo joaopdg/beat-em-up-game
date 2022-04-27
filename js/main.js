@@ -29,35 +29,48 @@ const gameEngine = {
     ctx.font = "18px Helvetica";
     ctx.fillStyle = "black";
     ctx.fillText(`Score: ${points}`, 30, 490);
-    ctx.font = "12px Helvetica";
-    ctx.fillText(`frames: ${gameEngine.frames}`, 800, 35);
+    ctx.font = "20px Helvetica";
+    ctx.fillText(Math.floor(`${gameEngine.frames}`/60), 450, 55);
   },
   lifeBar: function () {
     ctx.fillStyle = "black";
-    ctx.fillText("Life", 30, 35);
+    ctx.fillText("LIFE", 30, 35);
     ctx.fillStyle = "green";
     ctx.fillRect(31, 41, player.life, 18);
     ctx.lineWidth = 2;
     ctx.strokeRect(30, 40, 300, 20);
   },
+  bossLifeBar: function () {
+    ctx.fillStyle = "black";
+    ctx.fillText("FIRE DRAGON", 732, 35);
+    ctx.fillStyle = "red";
+    ctx.fillRect(570, 41, bossLife, 18);
+    ctx.lineWidth = 2;
+    ctx.strokeRect(570, 40, 300, 20);
+  }
 };
 
 const updateGameArea = () => {
   background.drawBackground();
-  updateFire();
-  updateBoss();
   updateEnemiesBack();
   player.drawPlayer();
+  updateFire();
+  updateBoss();
   updateEnemiesFront();
   background.drawFence();
   checkGameOver();
   gameEngine.win();
   gameEngine.lifeBar();
+  gameEngine.bossLifeBar()
   gameEngine.score();
 };
 
 function checkGameOver() {
-  // COLISION WITH BACK ROW ENEMIES
+  if (player.life <= 0) {
+    gameEngine.stop();
+  }
+
+  // COLLISION WITH BACK ROW ENEMIES
   for (let i = 0; i < enemiesBack.length; i++) {
     if (
       player.crashWith(enemiesBack[i]) &&
@@ -103,12 +116,9 @@ function checkGameOver() {
       enemiesBack.splice(enemiesBack[i], 1);
       points += 1;
     }
-    if (player.life <= 0) {
-      gameEngine.stop();
-    }
   }
 
-  // COLISION WITH FRONT ROW ENEMIES
+  // COLLISION WITH FRONT ROW ENEMIES
   for (let i = 0; i < enemiesFront.length; i++) {
     if (
       player.crashWith(enemiesFront[i]) &&
@@ -154,27 +164,43 @@ function checkGameOver() {
       enemiesFront.splice(enemiesFront[i], 1);
       points += 1;
     }
-    if (player.life <= 0) {
-      gameEngine.stop();
-    }
   }
 
-  // COLISION WITH BOSS
+  // COLLISION WITH BOSS
   for (let i = 0; i < bossArray.length; i++) {
     if (
       player.crashWith(bossArray[i]) &&
       player.width === player.widthStopped
     ) {
       player.life -= 50;
-    } else if (player.life <= 0) {
-      gameEngine.stop();
-    } else if (
+      player.x -= 10
+    } 
+    if (
       player.crashWith(bossArray[i]) &&
-      player.width === player.withPunching
+      player.width === player.withPunching && bossLife > 0
     ) {
-      bossArray[i].life -= 50;
-    } else if (bossArray[i].life <= 0) {
+      bossLife -= 1;
+      bossArray[i].x += 10
+    } 
+    if (
+      player.crashWith(bossArray[i]) &&
+      player.width === player.widthKicking && bossLife > 0
+    ) {
+      bossLife -= 2;
+      bossArray[i].x += 10
+    } 
+    if (bossLife <= 0) {
       points += 100;
+      setTimeout(() => {
+        bossArray.pop(bossArray[i]);
+      }, 1000);
+    }
+  }
+
+  // COLLISION WITH FIRE
+  for (let i = 0; i < fireArray.length; i++) {
+    if (player.crashWith(fireArray[i])) {
+      player.life -= 0.5
     }
   }
 }

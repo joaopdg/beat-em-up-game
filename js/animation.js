@@ -48,3 +48,33 @@ function enemyWalking() {
     enemyImage.src = enemyWalking2.src;
   }
 }
+
+// BOSS ANIMATION
+let dragonImage1 = new Image()
+dragonImage1.src = 'docs/assets/imgs/boss_image1.png'
+let dragonImage = new Image()
+dragonImage.src = dragonImage1.src
+let dragonImage2 = new Image()
+dragonImage2.src = 'docs/assets/imgs/boss_image2.png'
+
+// FIRE ANIMATION
+let fire1 = new Image ()
+fire1.src = 'docs/assets/imgs/fire1.png'
+let fireImage= new Image ()
+fireImage.src = fire1.src
+let fire2 = new Image ()
+fire2.src = 'docs/assets/imgs/fire2.png'
+let fire3 = new Image ()
+fire3.src = 'docs/assets/imgs/fire3.png'
+
+function fireBurning() {
+  if (gameEngine.frames % 10 === 0) {
+    fireImage.src = fire1.src;
+  }
+  if (gameEngine.frames % 15 === 1) {
+    fireImage.src = fire2.src;
+  }
+  if (gameEngine.frames % 20 === 0) {
+    fireImage.src = fire3.src;
+  }
+}
