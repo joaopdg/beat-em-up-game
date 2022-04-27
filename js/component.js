@@ -100,7 +100,7 @@ function updateEnemiesBack() {
     enemiesBack[i].drawEnemy();
   }
 
-  if (gameEngine.frames % 750 === 0 && gameEngine.frames < 4900) {
+  if (gameEngine.frames % 650 === 0 && gameEngine.frames < 4900) {
     let minY = background.roadHeight + 20;
     let maxY =
       background.roadHeight +
@@ -120,7 +120,7 @@ function updateEnemiesFront() {
     enemiesFront[i].drawEnemy();
   }
 
-  if (gameEngine.frames % 1000 === 1 && gameEngine.frames < 4900) {
+  if (gameEngine.frames % 900 === 1 && gameEngine.frames < 4900) {
     let minY =
       background.roadHeight +
       (cHeight - background.roadHeight) / 2 -
@@ -152,7 +152,7 @@ class Boss {
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
   }
   left() {
-    return this.x + 60;
+    return this.x + 50;
   }
 
   right() {
@@ -181,7 +181,6 @@ function updateBoss() {
 
   if (
     gameEngine.frames > 5000 &&
-    gameEngine.frames < 5500 &&
     enemiesFront.length === 0 &&
     enemiesBack.length === 0 &&
     bossArray.length === 0

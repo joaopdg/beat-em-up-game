@@ -32,7 +32,8 @@ const gameEngine = {
     ctx.fillStyle = "black";
     ctx.fillText(`Score: ${points}`, 30, 490);
     ctx.font = "20px Helvetica";
-    ctx.fillText(Math.floor(`${gameEngine.frames}` / 60), 450, 55);
+    ctx.fillText(`${gameEngine.frames}`, 450, 55);
+/*     ctx.fillText(Math.floor(`${gameEngine.frames}` / 60), 450, 55); */
   },
   lifeBar: function () {
     ctx.fillStyle = "black";
@@ -82,7 +83,7 @@ function checkGameOver() {
       } else {
         enemiesBack[i].x += 60;
       }
-      player.life -= 50;
+      player.life -= 40;
     }
     if (
       player.crashWith(enemiesBack[i]) &&
@@ -130,7 +131,7 @@ function checkGameOver() {
       } else {
         enemiesFront[i].x += 60;
       }
-      player.life -= 50;
+      player.life -= 40;
     }
     if (
       player.crashWith(enemiesFront[i]) &&
@@ -173,7 +174,7 @@ function checkGameOver() {
       player.crashWith(bossArray[i]) &&
       player.width === player.widthStopped
     ) {
-      player.life -= 65;
+      player.life -= 55;
       player.x -= 60;
     }
     if (
@@ -206,12 +207,12 @@ function checkGameOver() {
       return !(
         player.y + player.height < enemies.top() ||
         player.y > enemies.bottom() ||
-        player.x + player.width - 80 < enemies.left() ||
+        player.x + player.width < enemies.left() ||
         player.x > enemies.right()
       );
     }
     if (crashWithFire(fireArray[i]) && player.width === player.widthBlocking) {
-      player.life -= 0.05;
+      player.life -= 0.08;
     }
     if (crashWithFire(fireArray[i]) && player.width !== player.widthBlocking) {
       player.life -= 0.25;
