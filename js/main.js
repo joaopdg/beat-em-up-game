@@ -32,8 +32,7 @@ const gameEngine = {
     ctx.fillStyle = "black";
     ctx.fillText(`Score: ${points}`, 30, 490);
     ctx.font = "20px Helvetica";
-    ctx.fillText(`${gameEngine.frames}`, 450, 55);
-    /*     ctx.fillText(Math.floor(`${gameEngine.frames}` / 60), 450, 55); */
+    ctx.fillText(Math.floor(`${gameEngine.frames}` / 60), 450, 57);
   },
   lifeBar: function () {
     ctx.fillStyle = "black";
@@ -179,7 +178,7 @@ function checkGameOver() {
     bossLife > 0
   ) {
     bossLife -= 0.5;
-    player.x -= 2;
+    player.x -= 5;
   }
   if (
     player.crashWith(dragonBoss) &&
@@ -187,7 +186,7 @@ function checkGameOver() {
     bossLife > 0
   ) {
     bossLife -= 1;
-    player.x -= 2;
+    player.x -= 10;
   }
   if (bossLife <= 0) {
     points += 100;
