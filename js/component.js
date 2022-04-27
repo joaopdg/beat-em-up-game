@@ -170,22 +170,16 @@ let mouthX = 630;
 let mouthY = 215;
 let bossLife;
 
-const bossArray = [];
+const dragonBoss = new Boss();
 function updateBoss() {
-  for (let i = 0; i < bossArray.length; i++) {
-    bossArray[i].drawBoss();
-    if (bossArray[i].x > bossArray[i].finalX) {
-      bossArray[i].x -= 1;
-    }
-  }
-
+  dragonBoss.drawBoss();
   if (
     gameEngine.frames > 5000 &&
     enemiesFront.length === 0 &&
     enemiesBack.length === 0 &&
-    bossArray.length === 0
+    dragonBoss.x > dragonBoss.finalX
   ) {
-    bossArray.push(new Boss());
+    dragonBoss.x -= 1;
   }
 }
 
@@ -238,7 +232,7 @@ function updateFire() {
     gameEngine.frames % 30 === 1 &&
     fireArray.length < 15 &&
     gameEngine.frames > 5000 &&
-    bossArray[0].x === bossArray[0].finalX
+    dragonBoss.x === dragonBoss.finalX
   ) {
     fireArray.push(new Fire());
   }

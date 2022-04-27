@@ -33,7 +33,7 @@ const gameEngine = {
     ctx.fillText(`Score: ${points}`, 30, 490);
     ctx.font = "20px Helvetica";
     ctx.fillText(`${gameEngine.frames}`, 450, 55);
-/*     ctx.fillText(Math.floor(`${gameEngine.frames}` / 60), 450, 55); */
+    /*     ctx.fillText(Math.floor(`${gameEngine.frames}` / 60), 450, 55); */
   },
   lifeBar: function () {
     ctx.fillStyle = "black";
@@ -44,7 +44,7 @@ const gameEngine = {
     ctx.strokeRect(30, 40, 300, 20);
   },
   bossLifeBar: function () {
-    if (bossArray.length === 1) {
+    if (dragonBoss.x === dragonBoss.finalX) {
       ctx.fillStyle = "black";
       ctx.fillText("FIRE DRAGON", 732, 35);
       ctx.fillStyle = "red";
@@ -169,36 +169,28 @@ function checkGameOver() {
   }
 
   // COLLISION WITH BOSS
-  for (let i = 0; i < bossArray.length; i++) {
-    if (
-      player.crashWith(bossArray[i]) &&
-      player.width === player.widthStopped
-    ) {
-      player.life -= 55;
-      player.x -= 60;
-    }
-    if (
-      player.crashWith(bossArray[i]) &&
-      player.width === player.withPunching &&
-      bossLife > 0
-    ) {
-      bossLife -= 1;
-      player.x -= 2;
-    }
-    if (
-      player.crashWith(bossArray[i]) &&
-      player.width === player.widthKicking &&
-      bossLife > 0
-    ) {
-      bossLife -= 2;
-      player.x -= 2;
-    }
-    if (bossLife <= 0) {
-      points += 100;
-      setTimeout(() => {
-        bossArray.pop(bossArray[i]);
-      }, 1000);
-    }
+  if (player.crashWith(dragonBoss) && player.width === player.widthStopped) {
+    player.life -= 55;
+    player.x -= 60;
+  }
+  if (
+    player.crashWith(dragonBoss) &&
+    player.width === player.withPunching &&
+    bossLife > 0
+  ) {
+    bossLife -= 0.5;
+    player.x -= 2;
+  }
+  if (
+    player.crashWith(dragonBoss) &&
+    player.width === player.widthKicking &&
+    bossLife > 0
+  ) {
+    bossLife -= 1;
+    player.x -= 2;
+  }
+  if (bossLife <= 0) {
+    points += 100;
   }
 
   // COLLISION WITH FIRE
@@ -206,7 +198,7 @@ function checkGameOver() {
     function crashWithFire(enemies) {
       return !(
         player.y + player.height < enemies.top() ||
-        player.y > enemies.bottom() ||
+        player.y + 10 > enemies.bottom() ||
         player.x + player.width < enemies.left() ||
         player.x > enemies.right()
       );
