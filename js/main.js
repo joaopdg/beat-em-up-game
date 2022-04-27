@@ -14,23 +14,25 @@ const gameEngine = {
     this.interval = setInterval(updateGameArea, 20);
   },
   win: function () {
-    if (points === 50) {
+    if (bossLife <= 0) {
       clearInterval(this.interval);
       ctx.fillStyle = "green";
       ctx.fillText("YOU WIN", 420, 225);
     }
   },
   stop: function () {
-    clearInterval(this.interval);
-    ctx.fillStyle = "red";
-    ctx.fillText("GAME OVER", 400, 225);
+    if (player.life <= 0) {
+      clearInterval(this.interval);
+      ctx.fillStyle = "red";
+      ctx.fillText("GAME OVER", 400, 225);
+    }
   },
   score: function () {
     ctx.font = "18px Helvetica";
     ctx.fillStyle = "black";
     ctx.fillText(`Score: ${points}`, 30, 490);
     ctx.font = "20px Helvetica";
-    ctx.fillText(Math.floor(`${gameEngine.frames}`/60), 450, 55);
+    ctx.fillText(Math.floor(`${gameEngine.frames}` / 60), 450, 55);
   },
   lifeBar: function () {
     ctx.fillStyle = "black";
@@ -41,13 +43,15 @@ const gameEngine = {
     ctx.strokeRect(30, 40, 300, 20);
   },
   bossLifeBar: function () {
-    ctx.fillStyle = "black";
-    ctx.fillText("FIRE DRAGON", 732, 35);
-    ctx.fillStyle = "red";
-    ctx.fillRect(570, 41, bossLife, 18);
-    ctx.lineWidth = 2;
-    ctx.strokeRect(570, 40, 300, 20);
-  }
+    if (bossArray.length === 1) {
+      ctx.fillStyle = "black";
+      ctx.fillText("FIRE DRAGON", 732, 35);
+      ctx.fillStyle = "red";
+      ctx.fillRect(570, 41, bossLife, 18);
+      ctx.lineWidth = 2;
+      ctx.strokeRect(570, 40, 300, 20);
+    }
+  },
 };
 
 const updateGameArea = () => {
@@ -59,17 +63,14 @@ const updateGameArea = () => {
   updateEnemiesFront();
   background.drawFence();
   checkGameOver();
+  gameEngine.score();
+  gameEngine.stop();
   gameEngine.win();
   gameEngine.lifeBar();
-  gameEngine.bossLifeBar()
-  gameEngine.score();
+  gameEngine.bossLifeBar();
 };
 
 function checkGameOver() {
-  if (player.life <= 0) {
-    gameEngine.stop();
-  }
-
   // COLLISION WITH BACK ROW ENEMIES
   for (let i = 0; i < enemiesBack.length; i++) {
     if (
@@ -172,23 +173,25 @@ function checkGameOver() {
       player.crashWith(bossArray[i]) &&
       player.width === player.widthStopped
     ) {
-      player.life -= 50;
-      player.x -= 10
-    } 
+      player.life -= 65;
+      player.x -= 60;
+    }
     if (
       player.crashWith(bossArray[i]) &&
-      player.width === player.withPunching && bossLife > 0
+      player.width === player.withPunching &&
+      bossLife > 0
     ) {
       bossLife -= 1;
-      bossArray[i].x += 10
-    } 
+      player.x -= 2;
+    }
     if (
       player.crashWith(bossArray[i]) &&
-      player.width === player.widthKicking && bossLife > 0
+      player.width === player.widthKicking &&
+      bossLife > 0
     ) {
       bossLife -= 2;
-      bossArray[i].x += 10
-    } 
+      player.x -= 2;
+    }
     if (bossLife <= 0) {
       points += 100;
       setTimeout(() => {
@@ -199,8 +202,19 @@ function checkGameOver() {
 
   // COLLISION WITH FIRE
   for (let i = 0; i < fireArray.length; i++) {
-    if (player.crashWith(fireArray[i])) {
-      player.life -= 0.5
+    function crashWithFire(enemies) {
+      return !(
+        player.y + player.height < enemies.top() ||
+        player.y > enemies.bottom() ||
+        player.x + player.width - 80 < enemies.left() ||
+        player.x > enemies.right()
+      );
+    }
+    if (crashWithFire(fireArray[i]) && player.width === player.widthBlocking) {
+      player.life -= 0.05;
+    }
+    if (crashWithFire(fireArray[i]) && player.width !== player.widthBlocking) {
+      player.life -= 0.25;
     }
   }
 }

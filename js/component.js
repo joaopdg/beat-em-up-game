@@ -76,7 +76,7 @@ class Enemy {
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
   }
   left() {
-    return this.x;
+    return this.x + 50;
   }
 
   right() {
@@ -135,24 +135,24 @@ function updateEnemiesFront() {
 
 class Boss {
   constructor() {
-    this.x = 900;
-    this.finalX = 650
-    this.y = 190;
+    this.x = 1100;
+    this.finalX = 650;
+    this.y = 200;
     this.width = 240;
     this.height = 256;
-    bossLife = 300
-    this.img = dragonImage
+    bossLife = 300;
+    this.img = dragonImage;
   }
   drawBoss() {
-    if (fireArray.length > 1){
-    dragonImage.src = dragonImage2.src
-  } else {
-    dragonImage.src = dragonImage1.src
-  }
+    if (fireArray.length > 1) {
+      dragonImage.src = dragonImage2.src;
+    } else {
+      dragonImage.src = dragonImage1.src;
+    }
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
   }
   left() {
-    return this.x;
+    return this.x + 60;
   }
 
   right() {
@@ -166,9 +166,8 @@ class Boss {
     return this.y + this.height;
   }
 }
-
-let mouthX = 630
-let mouthY = 205
+let mouthX = 630;
+let mouthY = 215;
 let bossLife;
 
 const bossArray = [];
@@ -181,9 +180,10 @@ function updateBoss() {
   }
 
   if (
-/*     gameEngine.frames > 5000 &&
+    gameEngine.frames > 5000 &&
+    gameEngine.frames < 5500 &&
     enemiesFront.length === 0 &&
-    enemiesBack.length === 0 && */
+    enemiesBack.length === 0 &&
     bossArray.length === 0
   ) {
     bossArray.push(new Boss());
@@ -196,14 +196,14 @@ class Fire {
     this.y = mouthY;
     this.width = 57;
     this.height = 70;
-    this.img = fireImage
+    this.img = fireImage;
   }
   drawFire() {
     if (this.x > randomX && this.y < randomY) {
       this.x -= Math.floor(Math.random() * (6 - 2) + 2);
       this.y += Math.floor(Math.random() * (2 - 1) + 1);
     }
-    fireBurning()
+    fireBurning();
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
   }
   left() {
@@ -229,16 +229,17 @@ function updateFire() {
   for (let i = 0; i < fireArray.length; i++) {
     fireArray[i].drawFire();
     randomX = Math.floor(Math.random() * (900 - 100) + 100);
-    randomY = Math.floor(Math.random() * (400 - 250) + 250);
-      setTimeout(() => {
-        fireArray.shift(fireArray[i]);
-      }, 10000)
-
+    randomY = Math.floor(Math.random() * (500 - 250) + 250);
+    setTimeout(() => {
+      fireArray.shift(fireArray[i]);
+    }, 10000);
   }
 
   if (
     gameEngine.frames % 30 === 1 &&
-    fireArray.length < 15 && bossArray[0].x === bossArray[0].finalX
+    fireArray.length < 15 &&
+    gameEngine.frames > 5000 &&
+    bossArray[0].x === bossArray[0].finalX
   ) {
     fireArray.push(new Fire());
   }
