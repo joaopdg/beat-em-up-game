@@ -1,3 +1,19 @@
+const startButton = document.getElementsByClassName("start-button")[0];
+
+let gameRunning = false;
+
+window.onload = () => {
+  startButton.onclick = () => {
+    if (startButton.className === "start-button") {
+      gameEngine.start();
+      startButton.innerHTML = "PLAY AGAIN";
+      startButton.className = "reset-button";
+    } else {
+      gameEngine.resetGame();
+    }
+  };
+};
+
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
@@ -12,16 +28,36 @@ let points = 0;
 const gameEngine = {
   frames: 0,
   start: function () {
+    gameRunning = true;
     this.interval = setInterval(updateGameArea, 20);
+  },
+  resetGame: function () {
+    if (gameRunning === false) {
+      clearInterval(this.interval);
+      ctx.clearRect(0, 0, cWidth, cHeight);
+      this.frames = 0;
+      points = 0;
+      player.life = 340;
+      player.x = 20;
+      player.y = 250;
+      enemiesBack.length = 0;
+      enemiesFront.length = 0;
+      dragonBoss.x = 1100;
+      bossLife = 483;
+      bossBarY = 340;
+      this.start();
+    }
   },
   win: function () {
     if (bossLife >= 823) {
       clearInterval(this.interval);
+      gameRunning = false;
     }
   },
   stop: function () {
     if (player.life <= 0) {
       clearInterval(this.interval);
+      gameRunning = false;
     }
   },
   finalScreen: function () {
@@ -224,6 +260,3 @@ function checkGameOver() {
     }
   }
 }
-
-// START GAME
-gameEngine.start();

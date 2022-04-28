@@ -1,8 +1,8 @@
 body {
   height: 97vh;
   width: 97vw;
-  /*   background-image: url('/docs/assets/imgs/pagecover.jpg');
-  background-size: cover; */
+  background-image: url("/docs/assets/imgs/pagecover.jpg");
+  background-size: cover;
 }
 
 header {
@@ -13,4 +13,14 @@ header {
   margin-left: 30px;
   display: flex;
   justify-content: space-around;
+}
+
+#button {
+  margin-top: 50px;
+  display: flex;
+  justify-content: space-around;
+}
+
+button {
+  font-size: 30px;
 }

@@ -140,7 +140,6 @@ class Boss {
     this.y = 200;
     this.width = 240;
     this.height = 256;
-    bossLife = 483;
     this.img = dragonImage;
   }
   drawBoss() {
@@ -166,10 +165,10 @@ class Boss {
     return this.y + this.height;
   }
 }
-let bossBarY = 340;
+let bossBarY = 335;
 let mouthX = 630;
 let mouthY = 215;
-let bossLife;
+let bossLife = 483;
 
 function updateBoss() {
   dragonBoss.drawBoss();
