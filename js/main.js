@@ -30,6 +30,7 @@ const gameEngine = {
   start: function () {
     gameRunning = true;
     this.interval = setInterval(updateGameArea, 20);
+    bgMusic.play();
   },
   resetGame: function () {
     if (gameRunning === false) {
@@ -52,12 +53,14 @@ const gameEngine = {
     if (bossLife >= 823) {
       clearInterval(this.interval);
       gameRunning = false;
+      youWinS.play();
     }
   },
   stop: function () {
     if (player.life <= 0) {
       clearInterval(this.interval);
       gameRunning = false;
+      youLoseS.play();
     }
   },
   finalScreen: function () {
@@ -128,6 +131,7 @@ function checkGameOver() {
       } else {
         enemiesBack[i].x += 60;
       }
+      playerHurt.play();
       player.life -= 40;
     }
     if (
@@ -139,6 +143,7 @@ function checkGameOver() {
       } else {
         enemiesBack[i].x += 60;
       }
+      playerHurt.play();
       player.life -= 10;
     }
     if (
@@ -157,10 +162,12 @@ function checkGameOver() {
     }
     if (enemiesBack[i].x + enemiesBack[i].width <= 0) {
       enemiesBack.splice(i, 1);
+      playerHurt.play();
       player.life -= 30;
       points -= 50;
     }
     if (enemiesBack[i].life <= 0) {
+      enemyHurt.play();
       enemiesBack.splice(i, 1);
       points += 100;
     }
@@ -177,6 +184,7 @@ function checkGameOver() {
       } else {
         enemiesFront[i].x += 60;
       }
+      playerHurt.play();
       player.life -= 40;
     }
     if (
@@ -188,6 +196,7 @@ function checkGameOver() {
       } else {
         enemiesFront[i].x += 60;
       }
+      playerHurt.play();
       player.life -= 10;
     }
     if (
@@ -206,10 +215,12 @@ function checkGameOver() {
     }
     if (enemiesFront[i].x + enemiesFront[i].width <= 0) {
       enemiesFront.splice(i, 1);
+      playerHurt.play();
       player.life -= 30;
       points -= 50;
     }
     if (enemiesFront[i].life <= 0) {
+      enemyHurt.play();
       enemiesFront.splice(i, 1);
       points += 100;
     }
@@ -217,6 +228,7 @@ function checkGameOver() {
 
   // COLLISION WITH BOSS
   if (player.crashWith(dragonBoss) && player.width === player.widthStopped) {
+    playerHurt.play();
     player.life -= 55;
     player.x -= 60;
   }
@@ -253,9 +265,11 @@ function checkGameOver() {
       );
     }
     if (crashWithFire(fireArray[i]) && player.width === player.widthBlocking) {
+      playerHurt.play();
       player.life -= 0.08;
     }
     if (crashWithFire(fireArray[i]) && player.width !== player.widthBlocking) {
+      playerHurt.play();
       player.life -= 0.25;
     }
   }

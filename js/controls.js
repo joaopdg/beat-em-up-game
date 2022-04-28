@@ -27,10 +27,12 @@ document.addEventListener("keydown", (e) => {
       }
       break;
     case "KeyA":
+      playerPunchS.play();
       player.width = player.withPunching;
       playerImage.src = playerPunch.src;
       break;
     case "KeyS":
+      playerKickS.play();
       player.width = player.widthKicking;
       playerImage.src = playerKick.src;
       break;

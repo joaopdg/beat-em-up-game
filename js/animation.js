@@ -90,3 +90,23 @@ let youWinScreen = new Image();
 youWinScreen.src = "docs/assets/imgs/youwin.png";
 let finalBossScreen = new Image();
 finalBossScreen.src = "docs/assets/imgs/finalBoss.png";
+
+// SOUNDS
+let playerPunchS = new Audio("docs/assets/sounds/playerPunch.wav");
+playerPunchS.loop = false;
+let playerKickS = new Audio("docs/assets/sounds/playerKick.wav");
+playerKickS.loop = false;
+let playerHurt = new Audio("docs/assets/sounds/playerHurt.wav");
+playerHurt.loop = false;
+let enemyHurt = new Audio("docs/assets/sounds/enemyHurt.wav");
+enemyHurt.loop = false;
+let dragonSound = new Audio("docs/assets/sounds/dragonFire.mp3");
+dragonSound.loop = false;
+
+let youWinS = new Audio("docs/assets/sounds/youWin.mp3");
+youWinS.loop = false;
+let youLoseS = new Audio("docs/assets/sounds/youLose.mp3");
+youLoseS.loop = false;
+
+let bgMusic = new Audio("docs/assets/sounds/sor_bgmusic.mp3");
+bgMusic.loop = true;

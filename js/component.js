@@ -144,6 +144,7 @@ class Boss {
   }
   drawBoss() {
     if (fireArray.length > 1) {
+      dragonSound.play();
       dragonImage.src = dragonImage2.src;
     } else {
       dragonImage.src = dragonImage1.src;
@@ -210,7 +211,7 @@ class Fire {
     return this.y;
   }
   bottom() {
-    return this.y + this.height;
+    return this.y + this.height - 10;
   }
 }
 
