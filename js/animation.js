@@ -15,6 +15,8 @@ let playerKick = new Image();
 playerKick.src = "docs/assets/imgs/player_kick.png";
 let playerBlock = new Image();
 playerBlock.src = "docs/assets/imgs/player_block.png";
+let playerLifeBar = new Image();
+playerLifeBar.src = "docs/assets/imgs/player_lifebar.png";
 
 function playerWalking() {
   if (gameEngine.frames % 10 === 0) {
@@ -56,6 +58,8 @@ let dragonImage = new Image();
 dragonImage.src = dragonImage1.src;
 let dragonImage2 = new Image();
 dragonImage2.src = "docs/assets/imgs/boss_image2.png";
+let bossLifeBar = new Image();
+bossLifeBar.src = "docs/assets/imgs/boss_lifebar.png";
 
 // FIRE ANIMATION
 let fire1 = new Image();
@@ -78,3 +82,11 @@ function fireBurning() {
     fireImage.src = fire3.src;
   }
 }
+
+// FINAL SCREEN
+let gameOverScreen = new Image();
+gameOverScreen.src = "docs/assets/imgs/gameover.png";
+let youWinScreen = new Image();
+youWinScreen.src = "docs/assets/imgs/youwin.png";
+let finalBossScreen = new Image();
+finalBossScreen.src = "docs/assets/imgs/finalBoss.png";

@@ -17,8 +17,8 @@ class Background {
 
   drawFence() {
     this.imgFence.src = "docs/assets/imgs/background_fence.png";
-    ctx.drawImage(this.imgFence, -scrollVal, 0, 900, 500);
-    ctx.drawImage(this.imgFence, cWidth - scrollVal, 0, 900, 500);
+    ctx.drawImage(this.imgFence, -scrollVal, 409, 900, 91);
+    ctx.drawImage(this.imgFence, cWidth - scrollVal, 409, 900, 91);
   }
 }
 
@@ -33,7 +33,7 @@ class Player {
     this.width = this.widthStopped;
     this.height = 166;
     this.img = playerImage;
-    this.life = 300;
+    this.life = 340;
   }
   drawPlayer() {
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
@@ -100,7 +100,7 @@ function updateEnemiesBack() {
     enemiesBack[i].drawEnemy();
   }
 
-  if (gameEngine.frames % 650 === 0 && gameEngine.frames < 4900) {
+  if (gameEngine.frames % 450 === 0 && gameEngine.frames < 2900) {
     let minY = background.roadHeight + 20;
     let maxY =
       background.roadHeight +
@@ -120,7 +120,7 @@ function updateEnemiesFront() {
     enemiesFront[i].drawEnemy();
   }
 
-  if (gameEngine.frames % 900 === 1 && gameEngine.frames < 4900) {
+  if (gameEngine.frames % 700 === 1 && gameEngine.frames < 2900) {
     let minY =
       background.roadHeight +
       (cHeight - background.roadHeight) / 2 -
@@ -140,7 +140,7 @@ class Boss {
     this.y = 200;
     this.width = 240;
     this.height = 256;
-    bossLife = 300;
+    bossLife = 483;
     this.img = dragonImage;
   }
   drawBoss() {
@@ -166,15 +166,15 @@ class Boss {
     return this.y + this.height;
   }
 }
+let bossBarY = 340;
 let mouthX = 630;
 let mouthY = 215;
 let bossLife;
 
-const dragonBoss = new Boss();
 function updateBoss() {
   dragonBoss.drawBoss();
   if (
-    gameEngine.frames > 5000 &&
+    gameEngine.frames > 3000 &&
     enemiesFront.length === 0 &&
     enemiesBack.length === 0 &&
     dragonBoss.x > dragonBoss.finalX
@@ -231,7 +231,7 @@ function updateFire() {
   if (
     gameEngine.frames % 30 === 1 &&
     fireArray.length < 15 &&
-    gameEngine.frames > 5000 &&
+    gameEngine.frames > 3000 &&
     dragonBoss.x === dragonBoss.finalX
   ) {
     fireArray.push(new Fire());

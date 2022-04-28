@@ -5,6 +5,7 @@ const cWidth = canvas.width;
 const cHeight = canvas.height;
 
 const player = new Player();
+const dragonBoss = new Boss();
 const background = new Background();
 let points = 0;
 
@@ -14,42 +15,50 @@ const gameEngine = {
     this.interval = setInterval(updateGameArea, 20);
   },
   win: function () {
-    if (bossLife <= 0) {
+    if (bossLife >= 823) {
       clearInterval(this.interval);
-      ctx.fillStyle = "green";
-      ctx.fillText("YOU WIN", 420, 225);
     }
   },
   stop: function () {
     if (player.life <= 0) {
       clearInterval(this.interval);
-      ctx.fillStyle = "red";
-      ctx.fillText("GAME OVER", 400, 225);
+    }
+  },
+  finalScreen: function () {
+    if (bossLife >= 823) {
+      ctx.drawImage(youWinScreen, 0, 0, 900, 500);
+    }
+    if (player.life <= 0) {
+      ctx.drawImage(gameOverScreen, 0, 0, 900, 500);
+    }
+    if (dragonBoss.x < 1000 && dragonBoss.x > 800) {
+      ctx.drawImage(finalBossScreen, 0, 0, 900, 500);
     }
   },
   score: function () {
+    if (points < 0) {
+      points = 0;
+    }
+    ctx.fillStyle = "white";
+    ctx.font = "14px Helvetica";
+    ctx.fillText(`Score: ${points}`, 85, 70);
     ctx.font = "18px Helvetica";
-    ctx.fillStyle = "black";
-    ctx.fillText(`Score: ${points}`, 30, 490);
-    ctx.font = "20px Helvetica";
-    ctx.fillText(Math.floor(`${gameEngine.frames}` / 60), 450, 57);
+    ctx.fillText(Math.floor(`${gameEngine.frames}` / 60), 443, 57);
   },
   lifeBar: function () {
-    ctx.fillStyle = "black";
-    ctx.fillText("LIFE", 30, 35);
-    ctx.fillStyle = "green";
-    ctx.fillRect(31, 41, player.life, 18);
-    ctx.lineWidth = 2;
-    ctx.strokeRect(30, 40, 300, 20);
+    ctx.fillStyle = "darkred";
+    ctx.fillRect(85, 41, 340, 14);
+    ctx.fillStyle = "darkorange";
+    ctx.fillRect(85, 41, player.life, 14);
+    ctx.drawImage(playerLifeBar, 20, 20, 423, 60);
   },
   bossLifeBar: function () {
     if (dragonBoss.x === dragonBoss.finalX) {
-      ctx.fillStyle = "black";
-      ctx.fillText("FIRE DRAGON", 732, 35);
-      ctx.fillStyle = "red";
-      ctx.fillRect(570, 41, bossLife, 18);
-      ctx.lineWidth = 2;
-      ctx.strokeRect(570, 40, 300, 20);
+      ctx.fillStyle = "darkred";
+      ctx.fillRect(483, 41, 340, 14);
+      ctx.fillStyle = "darkorange";
+      ctx.fillRect(bossLife, 41, bossBarY, 14);
+      ctx.drawImage(bossLifeBar, 465, 20, 423, 60);
     }
   },
 };
@@ -68,6 +77,7 @@ const updateGameArea = () => {
   gameEngine.win();
   gameEngine.lifeBar();
   gameEngine.bossLifeBar();
+  gameEngine.finalScreen();
 };
 
 function checkGameOver() {
@@ -110,12 +120,13 @@ function checkGameOver() {
       enemiesBack[i].x += 90;
     }
     if (enemiesBack[i].x + enemiesBack[i].width <= 0) {
-      player.life -= 20;
-      enemiesBack.splice(enemiesBack[i], 1);
+      enemiesBack.splice(i, 1);
+      player.life -= 30;
+      points -= 50;
     }
     if (enemiesBack[i].life <= 0) {
-      enemiesBack.splice(enemiesBack[i], 1);
-      points += 1;
+      enemiesBack.splice(i, 1);
+      points += 100;
     }
   }
 
@@ -158,12 +169,13 @@ function checkGameOver() {
       enemiesFront[i].x += 90;
     }
     if (enemiesFront[i].x + enemiesFront[i].width <= 0) {
-      player.life -= 20;
-      enemiesFront.splice(enemiesFront[i], 1);
+      enemiesFront.splice(i, 1);
+      player.life -= 30;
+      points -= 50;
     }
     if (enemiesFront[i].life <= 0) {
-      enemiesFront.splice(enemiesFront[i], 1);
-      points += 1;
+      enemiesFront.splice(i, 1);
+      points += 100;
     }
   }
 
@@ -177,7 +189,8 @@ function checkGameOver() {
     player.width === player.withPunching &&
     bossLife > 0
   ) {
-    bossLife -= 0.5;
+    bossLife += 2;
+    bossBarY -= 2;
     player.x -= 5;
   }
   if (
@@ -185,11 +198,12 @@ function checkGameOver() {
     player.width === player.widthKicking &&
     bossLife > 0
   ) {
-    bossLife -= 1;
+    bossLife += 4;
+    bossBarY -= 4;
     player.x -= 10;
   }
-  if (bossLife <= 0) {
-    points += 100;
+  if (bossLife >= 823) {
+    points += 1000;
   }
 
   // COLLISION WITH FIRE

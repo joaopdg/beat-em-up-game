@@ -8,7 +8,7 @@ document.addEventListener("keydown", (e) => {
       break;
     case "ArrowRight":
       //SCROLLING ANIMATION
-      if (player.x > 100 && dragonBoss.x > dragonBoss.finalX) scrollVal += 1.5;
+      if (player.x > 100 && dragonBoss.x > 1000) scrollVal += 1.5;
       playerWalking();
       if (player.x + player.width < cWidth) {
         player.x += 3;
