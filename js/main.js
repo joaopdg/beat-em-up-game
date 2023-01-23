@@ -1,3 +1,7 @@
+/* Old values (windows)
+this.interval = setInterval(updateGameArea, 20);
+*/
+
 const startButton = document.getElementsByClassName("start-button")[0];
 
 let gameRunning = false;
@@ -29,7 +33,7 @@ const gameEngine = {
   frames: 0,
   start: function () {
     gameRunning = true;
-    this.interval = setInterval(updateGameArea, 20);
+    this.interval = setInterval(updateGameArea, 10);
     bgMusic.play();
   },
   resetGame: function () {
@@ -81,8 +85,10 @@ const gameEngine = {
     ctx.fillStyle = "white";
     ctx.font = "14px Helvetica";
     ctx.fillText(`Score: ${points}`, 85, 70);
+    /* Time hidden because speed-up for mac
     ctx.font = "18px Helvetica";
     ctx.fillText(Math.floor(`${gameEngine.frames}` / 60), 443, 57);
+    */
   },
   lifeBar: function () {
     ctx.fillStyle = "darkred";
